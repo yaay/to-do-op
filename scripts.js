@@ -1,106 +1,134 @@
 // Create a todo
 
 let notesDB = {
-    todo: [],
-    note: [
-        {
-            id: 'l9si2z5',
-            title: 'My note',
-            description: 'This is my note',
-            project: 'Main Notes'
-          },
-        {
-            id: 'cboac3t',
-            title: 'My note',
-            description: 'This is my edited note',
-            project: 'Main Notes'
-          }
-    ]
+  todo: [],
+  note: [
+    {
+      id: 'l9si2z5',
+      title: 'My note',
+      description: 'This is my note',
+      project: 'Main Notes'
+    },
+    {
+      id: 'cboac3t',
+      title: 'My note',
+      description: 'This is my edited note',
+      project: 'Main Notes'
+    }
+  ]
 }
 
-function createTodo(title, description, dueDate, piority, project='Main Todos') {
-    return {
-        id: Math.random().toString(36).substring(2, 9), 
-        title,
-        description,
-        dueDate,
-        piority,
-        project,
-        isDone: false
-    }
+function createTodo(title, description, dueDate, piority, project = 'Main Todos') {
+  return {
+    id: Math.random().toString(36).substring(2, 9),
+    title,
+    description,
+    dueDate,
+    piority,
+    project,
+    isDone: false
+  }
 }
 
-function createNote(title, description, project='Main Notes') {
-    return {
-        id: Math.random().toString(36).substring(2, 9),
-        title,
-        description,
-        project
-    }
+function createNote(title, description, project = 'Main Notes') {
+  return {
+    id: Math.random().toString(36).substring(2, 9),
+    title,
+    description,
+    project
+  }
 }
 
 function storeObj(objData, objType) {
-    notesDB[objType].push(objData);
+  notesDB[objType].push(objData);
 }
 
- 
+
 function createObj(type, title, description, dueDate, piority, project) {
-    if (type === 'todo') {
-        let newTodo = createTodo(title, description, dueDate, piority, project);
-        storeObj(newTodo, type)
-    }
-    else if (type === 'note') {
-        let newNote = createNote(title, description);
-        storeObj(newNote, type)
-    }
+  if (type === 'todo') {
+    let newTodo = createTodo(title, description, dueDate, piority, project);
+    storeObj(newTodo, type)
+  }
+  else if (type === 'note') {
+    let newNote = createNote(title, description);
+    storeObj(newNote, type)
+  }
 }
 
 
 
 function editObj(objType, objData, objId) {
-    notesDB[objType][objId] = objData
+  notesDB[objType][objId] = objData
 
 }
 
-// createObj('note', 'My note', 'This is my note');
-// note1 = createNote('My note', 'This is my note')
-// noteEdited = createNote('My note', 'This is my edited note')
-// editObj('note', noteEdited)
+// Add a todo
 
-// createObj('todo', 'My todo', 'This is my todo', '2020-10-10', 'high')
+const addTodoForm = document.querySelector('.add-todo-form');
+addTodoForm.addEventListener('submit', e => {
+  e.preventDefault();
+  const title = addTodoForm.title.value;
+  const description = addTodoForm.description.value;
+  const dueDate = addTodoForm.duedate.value;
+  const piority = addTodoForm.piority.value;
+  const project = addTodoForm.project.value;
+  createObj('todo', title, description, dueDate, piority, project);
+  console.log(notesDB);
+  addTodoForm.reset();
+  toggleFormDisplay();
+  todoRendrer();
+});
 
+//change .add-todo display for flex to none
 
-// createObj('note', note1.title, note1.description)
+function toggleFormDisplay () {
+  const addTodo = document.querySelector('.add-todo');
+  addTodo.classList.toggle('add-todo-display');
+}
 
-// storeObj(note1, 'note')
+function displayAddTodo() {
+  const addTodoButton = document.querySelector('.add-btn');
+  addTodoButton.addEventListener('click', () => {
+    toggleFormDisplay();
 
-// notesDB['notes'].push(note1)
+  });
+}
 
-// editObj('note', 'This is my edited note')
+displayAddTodo();
 
-// console.log(notesDB)
+function todoRendrer() {
+  notesDB.todo.forEach(todo => {
+    // select div notes-contaiber
+    const notesList = document.querySelector('.todo-container');
+    const noteItem = document.createElement('div');
+    noteItem.classList.add('todo-card');
+    noteItem.innerHTML = `
+      <h3>${todo.title}</h3>
+      <p>${todo.description}</p>
+      <p><strong>Project:</strong> ${todo.project}</p>
+      <div class="card-buttons">
+      <button class="edit-button">Edit</button>
+      <button class="delete-button">Delete</button>
+  </div>
+    `;
+    notesList.appendChild(noteItem);
+  });
 
-// Create function to display all todo and note in notesDB object
+}
 
-function displayAllNotes() {
-    let container = document.createElement('div');
-    container.className = 'notes-container';
-    for (let note of notesDB.note) {
-      let noteElement = document.createElement('p');
-      noteElement.textContent = `Note: ${note.title} - ${note.description}`;
-      container.appendChild(noteElement);
-    }
-    for (let todo of notesDB.todo) {
-      let todoElement = document.createElement('p');
-      todoElement.textContent = `Todo: ${todo.title} - ${todo.description} - ${todo.completed ? 'Completed' : 'Incomplete'}`;
-      container.appendChild(todoElement);
-    }
-    let existingContainer = document.querySelector('.notes-container');
-    if (existingContainer) {
-      existingContainer.replaceWith(container);
-    } else {
-      document.body.appendChild(container);
-    }
-  }
-  
-  displayAllNotes()
+notesDB.note.forEach(note => {
+  // select div notes-contaiber
+  const notesList = document.querySelector('.todo-container');
+  const noteItem = document.createElement('div');
+  noteItem.classList.add('todo-card');
+  noteItem.innerHTML = `
+    <h3>${note.title}</h3>
+    <p>${note.description}</p>
+    <p><strong>Project:</strong> ${note.project}</p>
+    <div class="card-buttons">
+    <button class="edit-button">Edit</button>
+    <button class="delete-button">Delete</button>
+</div>
+  `;
+  notesList.appendChild(noteItem);
+});

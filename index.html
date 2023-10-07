@@ -1,18 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script defer src="scripts.js"></script>
-    <!-- adding bootstrap -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
 
 </head>
+
 <body>
     <div class="container">
-
+        <div class="header">
+            <p>Todo&Notes</p>
+        </div>
+        <div class="sidebar">
+            <p>Projects</p>
+            <div class="projects-list">
+                <p>Project 1</p>
+                <p>Project 2</p>
+                <p>Project 3</p>
+                <p>Project 4</p>
+                <p>Project 5</p>
+            </div>
+        </div>
+        <div class="todo-container">
+            <div class="todo-card">
+                <p>Card Title</p>
+                <div class="card-buttons">
+                    <button class="edit-button">Edit</button>
+                    <button class="delete-button">Delete</button>
+                </div>
+            </div>
+        </div>
     </div>
-    
+    <div class="add-btn">
+        <p class="add-button">+</p>
+    </div>
+    <div class="add-todo">
+        <form class="add-todo-form" action="">
+            <input type="text" name="title" id="title" placeholder="Title">
+            <input type="text" name="description" id="description" placeholder="Description">
+            <input type="text" name="duedate" id="duedate" placeholder="Due Date">
+            <input type="text" name="piority" id="piority" placeholder="Piority">
+            <input type="text" name="project" id="project" placeholder="Project">
+            <input type="submit" value="Add">
+        </form>
+
 </body>
+
 </html>
