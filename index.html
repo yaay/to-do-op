@@ -16,13 +16,15 @@
             <p>Todo&Notes</p>
         </div>
         <div class="sidebar">
-            <p>Projects</p>
-            <div class="projects-list">
-                <p>Project 1</p>
-                <p>Project 2</p>
-                <p>Project 3</p>
-                <p>Project 4</p>
-                <p>Project 5</p>
+            <h3>Home</h3>
+            <div class="home-list">
+                <p>All Tasks</p>
+                <p>Today</p>
+                <p>Next 7 Days</p>
+                <p>Important</p>
+            </div>
+            <h3>Projects</h3>     
+            <div class="projects-list"> 
             </div>
         </div>
         <div class="todo-container">
@@ -40,11 +42,30 @@
     </div>
     <div class="add-todo">
         <form class="add-todo-form" action="">
-            <input type="text" name="title" id="title" placeholder="Title">
-            <input type="text" name="description" id="description" placeholder="Description">
-            <input type="text" name="duedate" id="duedate" placeholder="Due Date">
-            <input type="text" name="piority" id="piority" placeholder="Piority">
-            <input type="text" name="project" id="project" placeholder="Project">
+            <div class="row-inputs">
+                <div class="col-inputs">
+                    <label>Title</label>
+                    <input type="text" name="title" id="title" placeholder="Title">
+                </div>
+                <div class="col-inputs">
+                    <label>Due Date</label>
+                    <input type="date" name="duedate" id="duedate" placeholder="Due Date">
+                </div>
+            </div>
+            <div class="col-inputs">
+                <label>Description</label>
+                <input type="text" name="description" id="description" placeholder="Description">
+            </div>
+            <div>
+                <div class="col-inputs">                    
+                    <label>Piority</label>
+                    <input type="text" name="piority" id="piority" placeholder="Piority">
+                </div>
+                <div class="col-inputs">
+                    <label>Project</label>
+                    <input type="text" name="project" id="project" placeholder="Project">
+                </div>               
+            </div>
             <input type="submit" value="Add">
         </form>
 

@@ -1,7 +1,17 @@
 // Create a todo
 
 let notesDB = {
-  todo: [],
+  todo: [
+    {
+      id: 'l9si2z5',
+      title: 'My todo',
+      description: 'This is my todo',
+      dueDate: '2020-12-12',
+      piority: 'high',
+      project: 'Main Todos',
+      isDone: false
+    }
+  ],
   note: [
     {
       id: 'l9si2z5',
@@ -62,7 +72,7 @@ function editObj(objType, objData, objId) {
 
 }
 
-// Add a todo
+// Add a todo --- Dom stuff
 
 const addTodoForm = document.querySelector('.add-todo-form');
 addTodoForm.addEventListener('submit', e => {
@@ -75,28 +85,67 @@ addTodoForm.addEventListener('submit', e => {
   createObj('todo', title, description, dueDate, piority, project);
   console.log(notesDB);
   addTodoForm.reset();
-  toggleFormDisplay();
+  // editFormControl()
   todoRendrer();
 });
 
-//change .add-todo display for flex to none
-
-function toggleFormDisplay () {
-  const addTodo = document.querySelector('.add-todo');
-  addTodo.classList.toggle('add-todo-display');
+function filterByProject(project) {
+  notesDB.todo.filter(
+    (todo) => {
+      todo.project === project
+      console.log(todo)
+    }
+  )
 }
 
-function displayAddTodo() {
-  const addTodoButton = document.querySelector('.add-btn');
-  addTodoButton.addEventListener('click', () => {
-    toggleFormDisplay();
+//change .add-todo display for flex to none
 
-  });
+
+
+(function editFormControl(){
+  const form = document.querySelector('.add-todo');
+  const addBtn = document.querySelector('.add-btn');
+
+  addBtn.onclick = function() {
+    form.style.display = "flex";
+  }
+
+  window.onclick = function(event) {
+    if (event.target == form) {
+      form.style.display = "none";
+    }
+  }
+
+})()
+
+
+
+
+function displayProjects() {
+  const projectsList = document.querySelector('.projects-list');
+  notesDB.todo.map(todo => {
+    const p = document.createElement('p');
+    p.addEventListener('click', filterByProject(todo))
+    console.log('test',filterByProject(todo));
+    p.textContent = todo.project;
+    projectsList.appendChild(p);
+  })
+
 }
 
 displayAddTodo();
 
+function clearDom() {
+  document.querySelector('.todo-container').innerHTML = ''
+  document.querySelector('.projects-list').innerHTML = ''
+}
+
+
+
+
 function todoRendrer() {
+  
+  clearDom()
   notesDB.todo.forEach(todo => {
     // select div notes-contaiber
     const notesList = document.querySelector('.todo-container');
@@ -112,23 +161,68 @@ function todoRendrer() {
   </div>
     `;
     notesList.appendChild(noteItem);
+    
   });
-
+  displayProjects();
 }
 
-notesDB.note.forEach(note => {
-  // select div notes-contaiber
-  const notesList = document.querySelector('.todo-container');
-  const noteItem = document.createElement('div');
-  noteItem.classList.add('todo-card');
-  noteItem.innerHTML = `
-    <h3>${note.title}</h3>
-    <p>${note.description}</p>
-    <p><strong>Project:</strong> ${note.project}</p>
-    <div class="card-buttons">
-    <button class="edit-button">Edit</button>
-    <button class="delete-button">Delete</button>
-</div>
-  `;
-  notesList.appendChild(noteItem);
-});
+todoRendrer()
+
+
+
+// const editFormControl = () => {
+//   const form = document.querySelector('.add-todo');
+//   const addBtn = document.querySelector('.add-btn');
+
+//   function openForm() {
+//     addBtn.onclick = function() {
+//       form.style.display = "flex";
+//     }
+//   }
+
+//   function closeForm() {
+//     window.onclick = function(event) {
+//       if (event.target == form) {
+//         form.style.display = "none";
+//       }
+//     }
+//   }
+
+//   return
+// }
+
+// notesDB.note.forEach(note => {
+//   // select div notes-contaiber
+//   const notesList = document.querySelector('.todo-container');
+//   const noteItem = document.createElement('div');
+//   noteItem.classList.add('todo-card');
+//   noteItem.innerHTML = `
+//     <h3>${note.title}</h3>
+//     <p>${note.description}</p>
+//     <p><strong>Project:</strong> ${note.project}</p>
+//     <div class="card-buttons">
+//     <button class="edit-button">Edit</button>
+//     <button class="delete-button">Delete</button>
+// </div>
+//   `;
+//   notesList.appendChild(noteItem);
+// });
+
+// notesDB.todo.forEach(todo => {
+//   // select div notes-contaiber
+//   const notesList = document.querySelector('.todo-container');
+//   const noteItem = document.createElement('div');
+//   noteItem.classList.add('todo-card');
+//   noteItem.innerHTML = `
+//   <h3>${todo.title}</h3>
+//   <p>${todo.description}</p>
+//   <p><strong>Project:</strong> ${todo.project}</p>
+//   <div class="card-buttons">
+//   <button class="edit-button">Edit</button>
+//   <button class="delete-button">Delete</button>
+// </div>
+// `;
+//   notesList.appendChild(noteItem);
+//   displayProjects();
+
+// });
